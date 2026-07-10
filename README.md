@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  An all-in-one <a href="https://nostr.com">Nostr</a> identity signer for your browser.<br>
+  An all-in-one Nostr identity signer for your browser.<br>
   Your keys stay encrypted, on your device, always.
 </p>
 
