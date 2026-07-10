@@ -4,8 +4,7 @@ import pkg from './package.json'
 export default defineManifest({
   manifest_version: 3,
   name: 'NostrWallet',
-  description:
-    'All-in-one Nostr identity signer (NIP-07 / NIP-46) and Lightning wallet connect (NIP-47) for the web.',
+  description: 'All-in-one Nostr identity signer for the web (NIP-07).',
   version: pkg.version,
   icons: {
     16: 'public/icons/icon-16.png',
@@ -25,7 +24,7 @@ export default defineManifest({
     service_worker: 'src/background/index.ts',
     type: 'module',
   },
-  permissions: ['storage', 'alarms', 'offscreen'],
+  permissions: ['storage', 'alarms'],
   content_scripts: [
     {
       matches: ['<all_urls>'],

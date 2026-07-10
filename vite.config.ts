@@ -15,7 +15,6 @@ export default defineConfig({
         popup: 'src/popup/index.html',
         options: 'src/options/index.html',
         approval: 'src/approval-window/index.html',
-        offscreen: 'src/offscreen/offscreen.html',
       },
     },
   },
