@@ -1,4 +1,5 @@
 import type { ApprovalDecision, PendingApprovalRequest } from '../shared/types'
+import { topRightPosition } from './window-utils'
 
 const APPROVAL_TIMEOUT_MS = 90_000
 // Grace period before closing an idle approval window, so a rapid follow-up
@@ -61,11 +62,15 @@ async function ensureApprovalWindow(): Promise<void> {
       approvalWindowId = null
     }
   }
+  const width = 380
+  const { left, top } = await topRightPosition(width)
   const win = await chrome.windows.create({
     url: chrome.runtime.getURL('src/approval-window/index.html'),
     type: 'popup',
-    width: 380,
+    width,
     height: 480,
+    left,
+    top,
   })
   approvalWindowId = win?.id ?? null
 }

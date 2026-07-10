@@ -54,11 +54,11 @@ export function ApprovalPrompt({
         </div>
 
         <div className="flex gap-2">
-          <Button variant="primary" className="flex-1" onClick={() => onDecide(true, remember)}>
-            Allow
-          </Button>
           <Button variant="secondary" className="flex-1" onClick={() => onDecide(false, remember)}>
             Deny
+          </Button>
+          <Button variant="primary" className="flex-1" onClick={() => onDecide(true, remember)}>
+            Allow
           </Button>
         </div>
       </div>

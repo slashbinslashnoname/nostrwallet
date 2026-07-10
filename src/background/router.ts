@@ -5,6 +5,7 @@ import * as vault from './vault/vault'
 import * as accounts from './vault/accounts'
 import { appendActivity } from './activity-log'
 import { requestApproval, listPendingApprovals, resolvePendingApproval } from './approval'
+import { ensureUnlocked } from './unlock-gate'
 import {
   decideNip07,
   listPermissions,
@@ -91,7 +92,7 @@ async function vaultStatus() {
 
 export async function handleNip07Message(message: Nip07ContentMessage): Promise<BackgroundResult> {
   try {
-    if (!(await vault.isUnlocked())) throw new Error('Locked — open the extension to unlock it')
+    await ensureUnlocked()
 
     const account = await accounts.getDefaultAccount()
     if (!account) throw new Error('No identity configured yet')

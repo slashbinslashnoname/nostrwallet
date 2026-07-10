@@ -19,6 +19,16 @@ let cachedMasterKey: CryptoKey | null = null
 
 export class VaultError extends Error {}
 
+// Lets other background modules (e.g. the NIP-07 unlock gate) react when the
+// vault becomes unlocked, regardless of whether that happened via the popup,
+// a standalone unlock window, or vault creation.
+const unlockListeners = new Set<() => void>()
+
+export function onUnlock(listener: () => void): () => void {
+  unlockListeners.add(listener)
+  return () => unlockListeners.delete(listener)
+}
+
 export async function vaultExists(): Promise<boolean> {
   return (await getLocal('vault.meta')) !== undefined
 }
@@ -46,6 +56,7 @@ async function cacheUnlockedKey(masterKey: CryptoKey): Promise<void> {
   const raw = await exportMasterKey(masterKey)
   await setSession('unlockedMasterKeyB64', bytesToBase64(raw))
   await touchActivity()
+  for (const listener of unlockListeners) listener()
 }
 
 export async function touchActivity(): Promise<void> {
